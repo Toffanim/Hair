@@ -1,0 +1,16 @@
+#version 410 core
+ 
+layout(isolines, equal_spacing) in;
+uniform mat4 MVP;
+
+ 
+void main()
+{
+    float u = gl_TessCoord.x;
+    int iu = int(u);
+    float diff = u - iu;
+    float v = gl_TessCoord.y;
+    vec4 p = mix( gl_in[iu].gl_Position, gl_in[iu+1].gl_Position, diff);
+    p.y += v;
+    gl_Position = MVP * (p);
+}
