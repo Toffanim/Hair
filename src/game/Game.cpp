@@ -157,10 +157,12 @@ struct Hair
     void setup( int num, float d, glm::vec3 root )
     {
         positions = new GLfloat[ 3*num ];
-        float dim = 50;
+        float patch_size = 16;
+		int diff = num / patch_size;
         length = d;
         glm::vec3 pos = root;
-        float mass = (float)( rand() % 1000) / 100.0f;
+        float mass = (float)( rand() % 1000) / 100.0f;  //particle mass
+		mass = 0.01f;
         for( int i = 0; i < num; ++i)
         {
             Particle* p = new Particle(pos, mass);
@@ -194,19 +196,20 @@ struct Hair
         for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it) {
             Particle* p = *it;
             if(p->enabled) {
-                p->forces += f;
+                p->forces = f;
             }
         }
     }
 
     void update()
     {
-        float dt = (glfwGetTime() - currentTime)/10;  // Time step
+        float dt = (glfwGetTime() - currentTime);  // Time step
+		dt = 0.01f;
 		float Sdamping = 0.9f;  // Correction scale, must be between [0, 1], 1 = fully compensated
 		
 		//Collision sphere
-		glm::vec3 sphereOrigin = glm::vec3(0.0, -10.0, 0.0);
-		float sphereRadius = 0.5;
+		glm::vec3 sphereOrigin = glm::vec3(0.0, -5.0, 0.0);
+		float sphereRadius = 2.0;
  
         // update velocities
         for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it) {
@@ -217,7 +220,7 @@ struct Hair
             }
             p->velocity = p->velocity + dt * (p->forces * p->inv_mass);
             p->tmp_position += (p->velocity * dt);
-            p->forces = glm::vec3(0.0, -1.0, 0.0); //Add initial force = to gravity
+            p->forces = glm::vec3(0.0, -2.0, 0.0); //Add initial force = to gravity
             //p->velocity *= 0.99;
         }    
         // solve constraints
@@ -233,21 +236,10 @@ struct Hair
 				+ (pb->tmp_position.z - sphereOrigin.z) * (pb->tmp_position.z - sphereOrigin.z)
 				<= sphereRadius*sphereRadius)
 			{
-				glm::vec3 dir = pb->tmp_position.x - sphereOrigin;
+				glm::vec3 dir = pb->tmp_position - sphereOrigin;
 				dir = glm::normalize(dir);
 				pb->tmp_position = sphereOrigin + dir * sphereRadius;
 			}
-#if 0
-			if ((pa->tmp_position.x - sphereOrigin.x) * (pa->tmp_position.x - sphereOrigin.x)
-				+ (pa->tmp_position.y - sphereOrigin.y) * (pa->tmp_position.y - sphereOrigin.y)
-				+ (pa->tmp_position.z - sphereOrigin.z) * (pa->tmp_position.z - sphereOrigin.z)
-				<= sphereRadius*sphereRadius)
-			{
-				glm::vec3 dir = pa->tmp_position.x - sphereOrigin;
-				dir = glm::normalize(dir);
-				pa->tmp_position = sphereOrigin + dir * sphereRadius;
-			}
-#endif
 			curr_pos = pb->tmp_position;
             dir = pb->tmp_position - pa->tmp_position;
             dir = glm::normalize(dir);
@@ -266,7 +258,9 @@ struct Hair
         }
  
         Particle* last = particles.back();
+		last->velocity = (last->tmp_position - last->position) / dt;
         last->position = last->tmp_position;
+		
 
         for(int i = 0; i < particles.size(); ++i)
         {
@@ -321,7 +315,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     {
         for(int i = 0; i < 10; ++i)
         {
-            Hair h(128, 0.05f, glm::vec3(-0.5 + .01*i, 0.5,0.0));
+            Hair h(512, 0.02f, glm::vec3(-0.5 + .01*i, 0.5,0.0));
             h.addForce( glm::vec3(0.01, 0.0, 0.0) );
             vh.push_back(h);
         }

@@ -1,4 +1,4 @@
-﻿Build started 11/03/2016 14:53:44.
+﻿Build started 11/03/2016 15:47:56.
      1>Project "C:\Users\toffanim\Documents\Visual Studio 2013\Projects\Hair\build\demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\lib\glfw\include /I..\src /I..\common /I..\lib /ZI /nologo /W4 /WX- /MP /Od /Oy- /D GLEW_STATIC /D DEBUG /Gm- /EHsc /RTC1 /MDd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\Debug\src\game\Game.obj" /Fd"..\demo_d.pdb" /Gd /TP /analyze- /errorReport:prompt -std=c++11 -Wall  ..\src\game\Game.cpp
@@ -92,32 +92,32 @@
      1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(141): warning C4305: '=' : truncation from 'double' to 'float'
      1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(145): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(159): warning C4365: 'initializing' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(182): warning C4365: 'argument' : conversion from 'unsigned int' to 'GLsizeiptr', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(189): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(160): warning C4189: 'dim' : local variable is initialized but not referenced
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(204): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(271): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(273): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(274): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(275): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(285): warning C4365: 'argument' : conversion from 'unsigned int' to 'GLsizeiptr', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(286): warning C4365: 'argument' : conversion from 'unsigned int' to 'GLsizei', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(319): warning C4640: 'vh' : construction of local static object is not thread-safe
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(390): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(394): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(396): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(397): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(572): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(580): warning C4365: '=' : conversion from 'bool' to 'GLboolean', signed/unsigned mismatch
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(344): warning C4189: 'spotLightCount' : local variable is initialized but not referenced
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(342): warning C4189: 'pointLightCount' : local variable is initialized but not referenced
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(779): warning C4189: 'plane_triangleCount' : local variable is initialized but not referenced
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(774): warning C4189: 'cube_triangleCount' : local variable is initialized but not referenced
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(784): warning C4189: 'quad_triangleCount' : local variable is initialized but not referenced
-     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(1129): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(183): warning C4365: 'argument' : conversion from 'unsigned int' to 'GLsizeiptr', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(190): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(160): warning C4189: 'patch_size' : local variable is initialized but not referenced
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(205): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(264): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(266): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(267): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(268): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(278): warning C4365: 'argument' : conversion from 'unsigned int' to 'GLsizeiptr', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(279): warning C4365: 'argument' : conversion from 'unsigned int' to 'GLsizei', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(312): warning C4640: 'vh' : construction of local static object is not thread-safe
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(383): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(387): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(389): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(390): warning C4365: 'argument' : conversion from 'int' to 'unsigned int', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(565): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(573): warning C4365: '=' : conversion from 'bool' to 'GLboolean', signed/unsigned mismatch
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(337): warning C4189: 'spotLightCount' : local variable is initialized but not referenced
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(335): warning C4189: 'pointLightCount' : local variable is initialized but not referenced
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(772): warning C4189: 'plane_triangleCount' : local variable is initialized but not referenced
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(767): warning C4189: 'cube_triangleCount' : local variable is initialized but not referenced
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(777): warning C4189: 'quad_triangleCount' : local variable is initialized but not referenced
+     1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(1122): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\toffanim\documents\visual studio 2013\projects\hair\src\managers\manager.h(38): warning C4640: 'instance' : construction of local static object is not thread-safe
                  c:\users\toffanim\documents\visual studio 2013\projects\hair\src\managers\manager.h(37) : while compiling class template member function 'TextureManager &Manager<TextureManager>::instance(void)'
-                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(332) : see reference to function template instantiation 'TextureManager &Manager<TextureManager>::instance(void)' being compiled
+                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(325) : see reference to function template instantiation 'TextureManager &Manager<TextureManager>::instance(void)' being compiled
                  c:\users\toffanim\documents\visual studio 2013\projects\hair\src\managers\manager.h(51) : see reference to class template instantiation 'Manager<TextureManager>' being compiled
      1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\xstring(684): warning C4350: behavior change: 'std::_Wrap_alloc<std::allocator<char>>::_Wrap_alloc(const std::_Wrap_alloc<std::allocator<char>> &) throw()' called instead of 'std::_Wrap_alloc<std::allocator<char>>::_Wrap_alloc<std::_Wrap_alloc<std::allocator<char>>>(_Other &) throw()'
                  with
@@ -481,7 +481,7 @@
                      _Ty=Particle *
          ,            _Alloc=std::allocator<Particle *>
                  ]
-                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(292) : see reference to class template instantiation 'std::vector<Particle *,std::allocator<_Ty>>' being compiled
+                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(285) : see reference to class template instantiation 'std::vector<Particle *,std::allocator<_Ty>>' being compiled
                  with
                  [
                      _Ty=Particle *
@@ -520,7 +520,7 @@
                      _Ty=Hair
          ,            _Alloc=std::allocator<Hair>
                  ]
-                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(319) : see reference to class template instantiation 'std::vector<Hair,std::allocator<_Ty>>' being compiled
+                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(312) : see reference to class template instantiation 'std::vector<Hair,std::allocator<_Ty>>' being compiled
                  with
                  [
                      _Ty=Hair
@@ -559,7 +559,7 @@
                      _Ty=const GLchar *
          ,            _Alloc=std::allocator<const char *>
                  ]
-                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(1110) : see reference to class template instantiation 'std::vector<const GLchar *,std::allocator<_Ty>>' being compiled
+                 c:\users\toffanim\documents\visual studio 2013\projects\hair\src\game\game.cpp(1103) : see reference to class template instantiation 'std::vector<const GLchar *,std::allocator<_Ty>>' being compiled
                  with
                  [
                      _Ty=const GLchar *
@@ -4263,4 +4263,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.02
+Time Elapsed 00:00:02.03
