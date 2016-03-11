@@ -22,9 +22,9 @@
 class Player
 {
 public:
-    Player(int forwardKey = GLFW_KEY_W,
+    Player(int forwardKey = GLFW_KEY_Z,
            int backwardKey = GLFW_KEY_S,
-           int rightKey = GLFW_KEY_A,
+           int rightKey = GLFW_KEY_Q,
            int leftKey = GLFW_KEY_D);
     ~Player();
 

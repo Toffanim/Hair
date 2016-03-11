@@ -14,7 +14,7 @@
 #include <sstream>
 #include <string>
 #include <map>
-#include <GL/glew.h>
+#include <glew/glew.h>
 #include "../utils/Utils.h"
 
 class Shader

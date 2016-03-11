@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// OpenGL Mathematics (glm.g-truc.net)
 ///
-/// Copyright (c) 2005 - 2014 G-Truc Creation (www.g-truc.net)
+/// Copyright (c) 2005 - 2015 G-Truc Creation (www.g-truc.net)
 ///
 /// This half implementation is based on OpenEXR which is Copyright (c) 2002, 
 /// Industrial Light & Magic, a division of Lucas Digital Ltd. LLC
@@ -52,12 +52,12 @@ namespace detail
 			i(0)
 		{}
 
-		GLM_FUNC_QUALIFIER uif32(float f) :
-			f(f)
+		GLM_FUNC_QUALIFIER uif32(float f_) :
+			f(f_)
 		{}
 
-		GLM_FUNC_QUALIFIER uif32(uint32 i) :
-			i(i)
+		GLM_FUNC_QUALIFIER uif32(uint32 i_) :
+			i(i_)
 		{}
 
 		float f;

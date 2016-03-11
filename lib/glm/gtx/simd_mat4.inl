@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// OpenGL Mathematics (glm.g-truc.net)
 ///
-/// Copyright (c) 2005 - 2014 G-Truc Creation (www.g-truc.net)
+/// Copyright (c) 2005 - 2015 G-Truc Creation (www.g-truc.net)
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
@@ -64,15 +64,17 @@ GLM_FUNC_QUALIFIER fvec4SIMD const & fmat4x4SIMD::operator[]
 //////////////////////////////////////////////////////////////
 // Constructors
 
-GLM_FUNC_QUALIFIER fmat4x4SIMD::fmat4x4SIMD()
-{
-#	ifndef GLM_FORCE_NO_CTOR_INIT
-		this->Data[0] = fvec4SIMD(1, 0, 0, 0);
-		this->Data[1] = fvec4SIMD(0, 1, 0, 0);
-		this->Data[2] = fvec4SIMD(0, 0, 1, 0);
-		this->Data[3] = fvec4SIMD(0, 0, 0, 1);
-#	endif
-}
+#if !GLM_HAS_DEFAULTED_FUNCTIONS || !defined(GLM_FORCE_NO_CTOR_INIT)
+	GLM_FUNC_QUALIFIER fmat4x4SIMD::fmat4x4SIMD()
+	{
+#		ifndef GLM_FORCE_NO_CTOR_INIT
+			this->Data[0] = fvec4SIMD(1, 0, 0, 0);
+			this->Data[1] = fvec4SIMD(0, 1, 0, 0);
+			this->Data[2] = fvec4SIMD(0, 0, 1, 0);
+			this->Data[3] = fvec4SIMD(0, 0, 0, 1);
+#		endif
+	}
+#	endif//!GLM_HAS_DEFAULTED_FUNCTIONS
 
 GLM_FUNC_QUALIFIER fmat4x4SIMD::fmat4x4SIMD(float const & s)
 {
@@ -135,17 +137,19 @@ GLM_FUNC_QUALIFIER fmat4x4SIMD::fmat4x4SIMD
 //////////////////////////////////////////////////////////////
 // mat4 operators
 
-GLM_FUNC_QUALIFIER fmat4x4SIMD& fmat4x4SIMD::operator= 
-(
-	fmat4x4SIMD const & m
-)
-{
-	this->Data[0] = m[0];
-	this->Data[1] = m[1];
-	this->Data[2] = m[2];
-	this->Data[3] = m[3];
-	return *this;
-}
+#if !GLM_HAS_DEFAULTED_FUNCTIONS
+	GLM_FUNC_QUALIFIER fmat4x4SIMD& fmat4x4SIMD::operator=
+	(
+		fmat4x4SIMD const & m
+	)
+	{
+		this->Data[0] = m[0];
+		this->Data[1] = m[1];
+		this->Data[2] = m[2];
+		this->Data[3] = m[3];
+		return *this;
+	}
+#endif//!GLM_HAS_DEFAULTED_FUNCTIONS
 
 GLM_FUNC_QUALIFIER fmat4x4SIMD & fmat4x4SIMD::operator+= 
 (

@@ -16,7 +16,7 @@
 #include <iostream>
 #include <vector>
 // GL Includes
-#include <GL/glew.h> // Contains all the necessery OpenGL includes
+#include <glew/glew.h> // Contains all the necessery OpenGL includes
 #include <assimp/types.h>
 #include "../shader/Shader.h"
 #include <glm/glm.hpp>

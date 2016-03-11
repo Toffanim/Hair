@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// OpenGL Mathematics (glm.g-truc.net)
 ///
-/// Copyright (c) 2005 - 2014 G-Truc Creation (www.g-truc.net)
+/// Copyright (c) 2005 - 2015 G-Truc Creation (www.g-truc.net)
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
@@ -32,17 +32,27 @@
 
 namespace glm
 {
-	//////////////////////////////////////////////////////////////
-	// Constructors
+	// -- Constructors --
 
-	template <typename T, precision P>
-	GLM_FUNC_QUALIFIER tmat2x4<T, P>::tmat2x4()
-	{
-#		ifndef GLM_FORCE_NO_CTOR_INIT 
-			this->value[0] = col_type(1, 0, 0, 0);
-			this->value[1] = col_type(0, 1, 0, 0);
-#		endif
-	}
+#	if !GLM_HAS_DEFAULTED_FUNCTIONS || !defined(GLM_FORCE_NO_CTOR_INIT)
+		template <typename T, precision P>
+		GLM_FUNC_QUALIFIER tmat2x4<T, P>::tmat2x4()
+		{
+#			ifndef GLM_FORCE_NO_CTOR_INIT 
+				this->value[0] = col_type(1, 0, 0, 0);
+				this->value[1] = col_type(0, 1, 0, 0);
+#			endif
+		}
+#	endif
+
+#	if !GLM_HAS_DEFAULTED_FUNCTIONS
+		template <typename T, precision P>
+		GLM_FUNC_QUALIFIER tmat2x4<T, P>::tmat2x4(tmat2x4<T, P> const & m)
+		{
+			this->value[0] = m.value[0];
+			this->value[1] = m.value[1];
+		}
+#	endif//!GLM_HAS_DEFAULTED_FUNCTIONS
 
 	template <typename T, precision P>
 	template <precision Q>
@@ -82,8 +92,8 @@ namespace glm
 		this->value[1] = v1;
 	}
 
-	//////////////////////////////////////
-	// Conversion constructors
+	// -- Conversion constructors --
+
 	template <typename T, precision P>
 	template <
 		typename X1, typename Y1, typename Z1, typename W1,
@@ -106,8 +116,7 @@ namespace glm
 		this->value[1] = col_type(v2);
 	}
 
-	//////////////////////////////////////
-	// Matrix conversions
+	// -- Matrix conversions --
 
 	template <typename T, precision P>
 	template <typename U, precision Q>
@@ -173,8 +182,7 @@ namespace glm
 		this->value[1] = col_type(m[1], 0);
 	}
 
-	//////////////////////////////////////
-	// Accesses
+	// -- Accesses --
 
 #	ifdef GLM_FORCE_SIZE_FUNC
 		template <typename T, precision P>
@@ -218,8 +226,17 @@ namespace glm
 		}
 #	endif//GLM_FORCE_SIZE_FUNC
 
-	//////////////////////////////////////////////////////////////
-	// Unary updatable operators
+	// -- Unary updatable operators --
+
+#	if !GLM_HAS_DEFAULTED_FUNCTIONS
+		template <typename T, precision P>
+		GLM_FUNC_QUALIFIER tmat2x4<T, P>& tmat2x4<T, P>::operator=(tmat2x4<T, P> const & m)
+		{
+			this->value[0] = m[0];
+			this->value[1] = m[1];
+			return *this;
+		}
+#	endif//!GLM_HAS_DEFAULTED_FUNCTIONS
 
 	template <typename T, precision P>
 	template <typename U>
@@ -284,6 +301,8 @@ namespace glm
 		return *this;
 	}
 
+	// -- Increment and decrement operators --
+
 	template <typename T, precision P>
 	GLM_FUNC_QUALIFIER tmat2x4<T, P>& tmat2x4<T, P>::operator++()
 	{
@@ -316,8 +335,23 @@ namespace glm
 		return Result;
 	}
 
-	//////////////////////////////////////////////////////////////
-	// Binary operators
+	// -- Unary arithmetic operators --
+
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tmat2x4<T, P> operator+(tmat2x4<T, P> const & m)
+	{
+		return m;
+	}
+
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tmat2x4<T, P> operator-(tmat2x4<T, P> const & m)
+	{
+		return tmat2x4<T, P>(
+			-m[0], 
+			-m[1]);
+	}
+
+	// -- Binary arithmetic operators --
 
 	template <typename T, precision P>
 	GLM_FUNC_QUALIFIER tmat2x4<T, P> operator+(tmat2x4<T, P> const & m, T const & s)
@@ -474,17 +508,7 @@ namespace glm
 			s / m[1]);
 	}
 
-	// Unary constant operators
-	template <typename T, precision P>
-	GLM_FUNC_QUALIFIER tmat2x4<T, P> const operator-(tmat2x4<T, P> const & m)
-	{
-		return tmat2x4<T, P>(
-			-m[0], 
-			-m[1]);
-	}
-
-	//////////////////////////////////////
-	// Boolean operators
+	// -- Boolean operators --
 
 	template <typename T, precision P>
 	GLM_FUNC_QUALIFIER bool operator==(tmat2x4<T, P> const & m1, tmat2x4<T, P> const & m2)

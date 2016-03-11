@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{46327572-6714-4A41-B99A-81095B4FB919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\actor">
+      <UniqueIdentifier>{7CE3911E-33DA-EA41-A89E-03F5DA8EA983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera">
+      <UniqueIdentifier>{3C0C19E0-E57D-DD4C-BC7A-037EE5C0540B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\controller">
+      <UniqueIdentifier>{EC61230D-2380-8A49-B611-DD936122843D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game">
+      <UniqueIdentifier>{67623BAD-024E-B245-971F-093BD7F600A0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main">
+      <UniqueIdentifier>{A4ECB265-5B41-2843-B6FC-425D5EA9D75E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\managers">
+      <UniqueIdentifier>{45B717E9-802C-5549-8F5C-786ECF10E359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\mesh">
+      <UniqueIdentifier>{E4F8E6C5-45CA-0741-ADD1-A268CA385CD7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\player">
+      <UniqueIdentifier>{C9A97EA8-CE54-B147-A472-3790DFFA52DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\postFX">
+      <UniqueIdentifier>{E8D9688C-AF7C-BA4D-A426-6E54A28BF21A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\shader">
+      <UniqueIdentifier>{B0E027E4-53C7-E643-9DC5-A6E9CE909877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\skybox">
+      <UniqueIdentifier>{2E9160B2-AABC-7C43-9A47-B4F90706B284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{DEFBA2B8-1A1A-2D46-B131-672AF3B53262}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\actor\Actor.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\camera\Camera.cpp">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\controller\Controller.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\Game.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main\Main.cpp">
+      <Filter>src\main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\managers\ControllerManager.cpp">
+      <Filter>src\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\managers\Manager.cpp">
+      <Filter>src\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\managers\ModelManager.cpp">
+      <Filter>src\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mesh\Mesh.cpp">
+      <Filter>src\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mesh\Model.cpp">
+      <Filter>src\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\player\Player.cpp">
+      <Filter>src\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\postFX\PostFX.cpp">
+      <Filter>src\postFX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shader\Shader.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\skybox\Skybox.cpp">
+      <Filter>src\skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\Utils.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

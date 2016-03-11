@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{36D43ECB-9C4C-A245-B9E5-CF4A8A01B7FB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\glew">
+      <UniqueIdentifier>{6517BF4B-8F43-8344-980D-EDEB14812287}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\glew\glew.h">
+      <Filter>lib\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\glew\glxew.h">
+      <Filter>lib\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\glew\wglew.h">
+      <Filter>lib\glew</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lib\glew\glew.c">
+      <Filter>lib\glew</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

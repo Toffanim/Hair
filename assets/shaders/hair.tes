@@ -2,15 +2,19 @@
  
 layout(isolines, equal_spacing) in;
 uniform mat4 MVP;
-
- 
+uniform vec4 d_x = vec4( 0.02, 0.0, 0.0, 0.0 );
+uniform vec4 d_y = vec4( 0.0, 0.0, 0.02, 0.0);
+#define PI 3.1415
 void main()
 {
+    int verticesNb = gl_PatchVerticesIn;
     float u = gl_TessCoord.x;
-    int iu = int(u);
+    int iu = int( u * (verticesNb-1));
     float diff = u - iu;
     float v = gl_TessCoord.y;
-    vec4 p = mix( gl_in[iu].gl_Position, gl_in[iu+1].gl_Position, diff);
-    p.y += v;
+    vec4 p = mix( gl_in[iu].gl_Position, gl_in[iu].gl_Position, diff);
+	//p = gl_in[iu+1].gl_Position;
+    p += v * d_x * cos( v * 4 * PI ) ;
+	p += v * d_y * sin( v * 4 * PI );
     gl_Position = MVP * (p);
 }

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9563977C-819A-980D-2A87-7E10169D140F}</ProjectGuid>
+    <RootNamespace>glfw</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\debug\</OutDir>
+    <IntDir>obj\Debug\glfw\</IntDir>
+    <TargetName>glfw</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\debug\</OutDir>
+    <IntDir>obj\x64\Debug\glfw\</IntDir>
+    <TargetName>glfw</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\release\</OutDir>
+    <IntDir>obj\Release\glfw\</IntDir>
+    <TargetName>glfw</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\release\</OutDir>
+    <IntDir>obj\x64\Release\glfw\</IntDir>
+    <TargetName>glfw</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader></PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ProgramDataBaseFileName>$(OutDir)glfw.pdb</ProgramDataBaseFileName>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  <Lib>
+    <OutputFile>$(OutDir)glfw.lib</OutputFile>
+  </Lib>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader></PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ProgramDataBaseFileName>$(OutDir)glfw.pdb</ProgramDataBaseFileName>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  <Lib>
+    <OutputFile>$(OutDir)glfw.lib</OutputFile>
+    <TargetMachine>MachineX64</TargetMachine>
+  </Lib>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader></PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  <Lib>
+    <OutputFile>$(OutDir)glfw.lib</OutputFile>
+  </Lib>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader></PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_GLFW_WGL;_GLFW_WIN32;_GLFW_USE_OPENGL;_GLFW_HAS_PTHREAD;_GLFW_HAS_SCHED_YIELD;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib\glfw\lib;lib\glfw\include;lib\glfw\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  <Lib>
+    <OutputFile>$(OutDir)glfw.lib</OutputFile>
+    <TargetMachine>MachineX64</TargetMachine>
+  </Lib>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\glfw\include\GL\glfw.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lib\glfw\lib\clipboard.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\clipboard.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\context.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\context.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\gamma.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\gamma.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\init.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\init.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\input.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\input.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\joystick.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\joystick.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\monitor.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\monitor.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\time.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\time.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\wgl_context.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\wgl_context.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_clipboard.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_clipboard.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_gamma.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_gamma.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_init.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_init.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_joystick.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_joystick.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_monitor.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_monitor.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_time.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_time.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\win32_window.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\win32_window.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="lib\glfw\lib\window.c">
+      <ObjectFileName>$(IntDir)lib\glfw\lib\window.obj</ObjectFileName>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

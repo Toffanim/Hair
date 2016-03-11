@@ -201,7 +201,12 @@ struct Hair
 
     void update()
     {
-        float dt = (glfwGetTime() - currentTime)/10;
+        float dt = (glfwGetTime() - currentTime)/10;  // Time step
+		float Sdamping = 0.9f;  // Correction scale, must be between [0, 1], 1 = fully compensated
+		
+		//Collision sphere
+		glm::vec3 sphereOrigin = glm::vec3(0.0, -10.0, 0.0);
+		float sphereRadius = 0.5;
  
         // update velocities
         for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it) {
@@ -212,22 +217,42 @@ struct Hair
             }
             p->velocity = p->velocity + dt * (p->forces * p->inv_mass);
             p->tmp_position += (p->velocity * dt);
-            p->forces = glm::vec3(0.0, -0.1, 0.0);
-            p->velocity *= 0.99;
+            p->forces = glm::vec3(0.0, -1.0, 0.0); //Add initial force = to gravity
+            //p->velocity *= 0.99;
         }    
         // solve constraints
         glm::vec3 dir;
         glm::vec3 curr_pos;
         for(size_t i = 1; i < particles.size(); ++i) {
             Particle* pa = particles[i - 1];
-            Particle* pb = particles[i];
-            curr_pos = pb->tmp_position;
+            Particle* pb = particles[i]; 
+
+
+			if ((pb->tmp_position.x - sphereOrigin.x) * (pb->tmp_position.x - sphereOrigin.x)
+				+ (pb->tmp_position.y - sphereOrigin.y) * (pb->tmp_position.y - sphereOrigin.y)
+				+ (pb->tmp_position.z - sphereOrigin.z) * (pb->tmp_position.z - sphereOrigin.z)
+				<= sphereRadius*sphereRadius)
+			{
+				glm::vec3 dir = pb->tmp_position.x - sphereOrigin;
+				dir = glm::normalize(dir);
+				pb->tmp_position = sphereOrigin + dir * sphereRadius;
+			}
+#if 0
+			if ((pa->tmp_position.x - sphereOrigin.x) * (pa->tmp_position.x - sphereOrigin.x)
+				+ (pa->tmp_position.y - sphereOrigin.y) * (pa->tmp_position.y - sphereOrigin.y)
+				+ (pa->tmp_position.z - sphereOrigin.z) * (pa->tmp_position.z - sphereOrigin.z)
+				<= sphereRadius*sphereRadius)
+			{
+				glm::vec3 dir = pa->tmp_position.x - sphereOrigin;
+				dir = glm::normalize(dir);
+				pa->tmp_position = sphereOrigin + dir * sphereRadius;
+			}
+#endif
+			curr_pos = pb->tmp_position;
             dir = pb->tmp_position - pa->tmp_position;
             dir = glm::normalize(dir);
-            //cout << pa->position.y << " " << pb->tmp_position.y << "   + " << (dir*length).y << endl; 
             pb->tmp_position = pa->tmp_position + dir * length;
             pb->d = curr_pos - pb->tmp_position; //  - curr_pos;
-            //cout << pb->d.y << endl;
         }    
  
         for(size_t i = 1; i < particles.size(); ++i) {
@@ -236,7 +261,7 @@ struct Hair
             if(!pa->enabled) {
                 continue;
             }
-            pa->velocity = ((pa->tmp_position - pa->position) / dt) + 0.9f *  (pb->d / dt);
+            pa->velocity = ((pa->tmp_position - pa->position) / dt) + Sdamping *  (pb->d / dt);
             pa->position = pa->tmp_position;
         }
  
@@ -254,11 +279,12 @@ struct Hair
 
     void draw()
     {
-        glPatchParameteri( GL_PATCH_VERTICES, 4 );
+        glPatchParameteri( GL_PATCH_VERTICES, 16 );
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER,  3*particles.size()*sizeof(GLfloat) , positions, GL_STATIC_DRAW);
-        glDrawArrays(GL_PATCHES, 0, 16);           
+        glDrawArrays(GL_PATCHES, 0, particles.size());  
+		Utils::checkGlError("Hair rendering");
     }
 
     GLfloat* positions;
@@ -293,9 +319,9 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     static std::vector<Hair> vh;
     if ( vh.empty() )
     {
-        for(int i = 0; i < 1; ++i)
+        for(int i = 0; i < 10; ++i)
         {
-            Hair h(16, 0.2f, glm::vec3(-0.5 + .0016*i, 0.5,0.0));
+            Hair h(128, 0.05f, glm::vec3(-0.5 + .01*i, 0.5,0.0));
             h.addForce( glm::vec3(0.01, 0.0, 0.0) );
             vh.push_back(h);
         }
@@ -360,13 +386,16 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     glUniform1f(glGetUniformLocation(shaderManager["hair"]->getProgram(), "Time"), t);
     glUniform1i(glGetUniformLocation(shaderManager["hair"]->getProgram(), "Diffuse"), 0);
     glUniform1i(glGetUniformLocation(shaderManager["hair"]->getProgram(), "Specular"), 1);
-    Utils::checkGlError("gbuffer0");    
-    for (int i =0; i < vh.size(); i++)
-    {
-        vh[i].addForce(glm::vec3(1.0,2.0,0.0));
-        vh[i].update();
-        vh[i].draw();
-    }
+    Utils::checkGlError("gbuffer0");
+	for (int i = 0; i < vh.size(); i++)
+	{
+		if (t <= 5)
+		{
+			vh[i].addForce(glm::vec3(1.0, 2.0, 0.0));
+		}
+		vh[i].update();
+		vh[i].draw();
+	}
     shaderManager["hair"]->unuse();
     //shaderManager["gbuffer"]->use();
     //glBindVertexArray(vaoManager["plane"]);

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// OpenGL Mathematics (glm.g-truc.net)
 ///
-/// Copyright (c) 2005 - 2014 G-Truc Creation (www.g-truc.net)
+/// Copyright (c) 2005 - 2015 G-Truc Creation (www.g-truc.net)
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
@@ -84,6 +84,7 @@ namespace glm
 	template <typename T, precision P> GLM_FUNC_QUALIFIER tvec4<T, P> atan2(const tvec4<T, P>& x, const tvec4<T, P>& y){return atan(x, y);}	//!< \brief Arc tangent. Returns an angle whose tangent is y/x. The signs of x and y are used to determine what quadrant the angle is in. The range of values returned by this function is [-PI, PI]. Results are undefined if x and y are both 0. (From GLM_GTX_compatibility)
 
 	template <typename genType> GLM_FUNC_DECL bool isfinite(genType const & x);											//!< \brief Test whether or not a scalar or each vector component is a finite value. (From GLM_GTX_compatibility)
+	template <typename T, precision P> GLM_FUNC_DECL tvec1<bool, P> isfinite(const tvec1<T, P>& x);				//!< \brief Test whether or not a scalar or each vector component is a finite value. (From GLM_GTX_compatibility)
 	template <typename T, precision P> GLM_FUNC_DECL tvec2<bool, P> isfinite(const tvec2<T, P>& x);				//!< \brief Test whether or not a scalar or each vector component is a finite value. (From GLM_GTX_compatibility)
 	template <typename T, precision P> GLM_FUNC_DECL tvec3<bool, P> isfinite(const tvec3<T, P>& x);				//!< \brief Test whether or not a scalar or each vector component is a finite value. (From GLM_GTX_compatibility)
 	template <typename T, precision P> GLM_FUNC_DECL tvec4<bool, P> isfinite(const tvec4<T, P>& x);				//!< \brief Test whether or not a scalar or each vector component is a finite value. (From GLM_GTX_compatibility)
