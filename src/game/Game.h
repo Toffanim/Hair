@@ -24,7 +24,6 @@
 #include <cfloat>
 #include <cstdint>
 #include <cstdlib>
-#include "../managers/ModelManager.h"
 #include "../managers/Manager.h"
 #include "../managers/ControllerManager.h"
 #include "GLFW/glfw3.h"

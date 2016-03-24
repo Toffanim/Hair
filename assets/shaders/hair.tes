@@ -2,19 +2,37 @@
  
 layout(isolines, equal_spacing) in;
 uniform mat4 MVP;
-uniform vec4 d_x = vec4( 0.02, 0.0, 0.0, 0.0 );
-uniform vec4 d_y = vec4( 0.0, 0.0, 0.02, 0.0);
+uniform mat4 MV;
+uniform vec3 d_x;
+uniform vec3 d_y;
+uniform float hair_zone = 0.02;
+
+out block
+{
+	vec2 Texcoord;
+	vec3 CameraSpacePosition;
+	vec3 CameraSpaceNormal;
+} Out; 
+
 #define PI 3.1415
 void main()
 {
     int verticesNb = gl_PatchVerticesIn;
     float u = gl_TessCoord.x;
     int iu = int( u * (verticesNb-1));
-    float diff = u - iu;
+    float diff = fract( u * (verticesNb-1));
     float v = gl_TessCoord.y;
-    vec4 p = mix( gl_in[iu].gl_Position, gl_in[iu].gl_Position, diff);
-	//p = gl_in[iu+1].gl_Position;
-    p += v * d_x * cos( v * 4 * PI ) ;
-	p += v * d_y * sin( v * 4 * PI );
+	vec4 p;
+	if (iu != verticesNb-1)
+        p = mix( gl_in[iu].gl_Position, gl_in[iu+1].gl_Position, diff);
+	else
+		p = gl_in[iu].gl_Position;
+    p += v * (hair_zone * vec4(d_x,1.f)) * cos( v * 4 * PI ) ;
+	p += v * (hair_zone * vec4(d_y, 1.f)) * sin( v * 4 * PI );
+	if ( iu != verticesNb-1)
+	    Out.CameraSpaceNormal = vec3(MV * (gl_in[iu].gl_Position - gl_in[iu+1].gl_Position));
+	else
+	    Out.CameraSpaceNormal = vec3(MV * (gl_in[iu-1].gl_Position - gl_in[iu].gl_Position));
+	Out.CameraSpacePosition = vec3(MV * p);
     gl_Position = MVP * (p);
 }

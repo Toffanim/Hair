@@ -17,11 +17,13 @@ Model::Model(GLchar* path):hasNormalMaps(false)
     }
 
     // Draws the model, and thus all its meshes
-void Model::Draw(Shader shader)
+void Model::Draw(Shader *shader)
     {
-        glUniform1i(glGetUniformLocation( shader.getProgram(), "useNormalMapping" ), hasNormalMaps);
+        //glUniform1i(glGetUniformLocation( shader.getProgram(), "useNormalMapping" ), hasNormalMaps);
+		Utils::checkGlError("gbuffer0");
         for(GLuint i = 0; i < this->meshes.size(); i++)
             this->meshes[i].Draw(shader);
+		Utils::checkGlError("gbuffer0");
     }
     
     /*  Functions   */
@@ -30,7 +32,7 @@ void Model::loadModel(string path)
     {
         // Read file via ASSIMP
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+        const aiScene* scene = importer.ReadFile(path, aiProcess_GenNormals | aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
         // Check for errors
         if(!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
@@ -87,22 +89,28 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             vertex.Position = vector;
             //  cout << "poition" << endl;
             // Normals
-            vector.x = mesh->mNormals[i].x;
-            vector.y = mesh->mNormals[i].y;
-            vector.z = mesh->mNormals[i].z;
-            vertex.Normal = vector;
+			if (mesh->HasNormals())
+			{
+				vector.x = mesh->mNormals[i].x;
+				vector.y = mesh->mNormals[i].y;
+				vector.z = mesh->mNormals[i].z;
+				vertex.Normal = vector;
+			}
             //cout << "normals " << endl;
             //cout << "N : (" << vector.x << ", " << vector.y << " ," << vector.z << " )" << endl;
             // Tangent space
-            vector.x = mesh->mTangents[i].x;
-            vector.y = mesh->mTangents[i].y;
-            vector.z = mesh->mTangents[i].z;
-            vertex.Tangent = vector;
-            //cout << "T : (" << vector.x << ", " << vector.y << " ," << vector.z << " )" << endl;
-            vector.x = mesh->mBitangents[i].x;
-            vector.y = mesh->mBitangents[i].y;
-            vector.z = mesh->mBitangents[i].z;
-            vertex.Bitangent = vector;
+			if (mesh->HasTangentsAndBitangents())
+			{
+				vector.x = mesh->mTangents[i].x;
+				vector.y = mesh->mTangents[i].y;
+				vector.z = mesh->mTangents[i].z;
+				vertex.Tangent = vector;
+				//cout << "T : (" << vector.x << ", " << vector.y << " ," << vector.z << " )" << endl;
+				vector.x = mesh->mBitangents[i].x;
+				vector.y = mesh->mBitangents[i].y;
+				vector.z = mesh->mBitangents[i].z;
+				vertex.Bitangent = vector;
+			}
             //cout << "B : (" << vector.x << ", " << vector.y << " ," << vector.z << " )" << endl;
             // Texture Coordinates
             if(mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?

@@ -13,6 +13,7 @@
 #include <map>
 #include <glew/glew.h>
 #include "../shader/Shader.h"
+#include "../mesh/Model.h"
 
 //Struct to differentiate GLuint referenced type for several singleton
 struct Tex
@@ -57,6 +58,19 @@ public :
 private :
     TextureManager() : managed( std::map<std::string, Tex>()){}
     std::map<std::string, Tex> managed;
+};
+
+
+class ModelManager : public Manager<ModelManager>
+{
+	friend class Manager<ModelManager>;
+
+public:
+	std::map<std::string, Model*>& getManaged(){ return(managed); }
+	Model* operator[](std::string s){ return(managed[s]); }
+private:
+	ModelManager() : managed(std::map<std::string, Model*>()){}
+	std::map<std::string, Model*> managed;
 };
 
 class VaoManager : public Manager<VaoManager>

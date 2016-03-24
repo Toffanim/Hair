@@ -1,0 +1,37 @@
+#version 410 core
+ 
+layout( isolines, equal_spacing) in;
+uniform mat4 MVP;
+#define PI 3.1415
+void main()
+{
+
+/*
+    int verticesNb = gl_PatchVerticesIn / 3;
+    float u = gl_TessCoord.x;
+    int iu = int( u * (verticesNb-1))*3;
+    float diff = u - iu;
+    float v = gl_TessCoord.y;
+    vec4 p = mix( gl_in[iu].gl_Position, gl_in[iu].gl_Position, diff);
+	vec4 p1 = mix( gl_in[iu+1].gl_Position, gl_in[iu+1].gl_Position, diff);
+	vec4 p2 = mix( gl_in[iu+2].gl_Position, gl_in[iu+2].gl_Position, diff);
+	
+	vec4 v1 = p1 - p;
+	vec4 v2 = p2 - p;
+	
+	vec4 new_p = p + 0.5*v1 + 0.5*v2;
+	float s0 = length(cross( vec3(v1), vec3(v2) )) / 2 ;
+	float s1 = length(cross( vec3(new_p - p), vec3(new_p - p1) )) / 2 ; 
+	float s2 = length(cross( vec3(new_p - p1), vec3(new_p - p2) )) / 2 ;
+	float s3 = length(cross( vec3(new_p - p), vec3(new_p - p2) )) / 2 ;
+	
+	vec4 final = (s1 * p2 + s2 * p + s3 * p1) / s0;
+*/
+    
+	int TotalVertices = gl_PatchVerticesIn;
+	float Line = gl_TessCoord.y;
+    float Vertex = gl_TessCoord.x;
+    int VertexIdx = int( Vertex * (TotalVertices-1));
+	vec4 p = gl_in[VertexIdx].gl_Position;
+    gl_Position = MVP * vec4(p);
+}

@@ -25,6 +25,7 @@ void main()
 	Out.Texcoord = TexCoord;
 	vec3 p = Position;
 	vec3 n = Normal;
+	
 	float t = Time + gl_InstanceID;
 	if (gl_InstanceID > 0) {
 		float ct = cos(t);

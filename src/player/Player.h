@@ -42,6 +42,8 @@ public:
     void startMoveUp();
     void startMoveDown();
     void stopMoveDown();
+	void canMoveTrue();
+	void canMoveFalse();
 
     void move(float deltaTime);
     void updateCamera();
@@ -82,6 +84,7 @@ private:
     bool moveBackward;
     bool moveUp;
     bool moveDown;
+	bool canMove;
     bool firstTime;
 
     int life;

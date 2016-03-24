@@ -42,7 +42,7 @@ void main()
 		n = -n;
 	vec3  diffuseColor = texture(Diffuse, In.Texcoord).rgb;
 	float specularColor = texture(Specular, In.Texcoord).r;
-	Color = vec4(diffuseColor, specularColor);
+	Color = vec4(0.0, 0.0, 2.0, specularColor);
 	Occludee = vec4(vec3(0.f), 1.f);
 	Normal = vec4(n, SpecularPower);
 }

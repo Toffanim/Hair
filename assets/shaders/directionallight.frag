@@ -24,11 +24,23 @@ uniform light
 
 vec3 directionalLight(in vec3 n, in vec3 v, in vec3 diffuseColor, in vec3 specularColor, in float specularPower)
 {
+
+#if 1
 	vec3 l = normalize(-DirectionalLight.Direction);
 	float ndotl = max(dot(n, l), 0.0);
 	vec3 h = normalize(l+v);
 	float ndoth = max(dot(n, h), 0.0);
-	return DirectionalLight.Color * DirectionalLight.Intensity * (diffuseColor * ndotl + specularColor * pow(ndoth, specularPower));;
+	return DirectionalLight.Color * DirectionalLight.Intensity * (diffuseColor * ndotl + specularColor * pow(ndoth, specularPower));
+#endif
+
+#if 0
+    //Kajiya-Kay lighting
+    vec3 l = normalize(-DirectionalLight.Direction);
+	float ndotl = sqrt( 1 - pow(max(dot(n, l), 0.0),2) );
+	vec3 h = normalize(l+v);
+	float ndoth = sqrt(1-pow(max(dot(n, h), 0.0),2));
+	return DirectionalLight.Color * DirectionalLight.Intensity * (diffuseColor * ndotl + specularColor * pow(ndoth, specularPower));
+#endif
 }
 
 void main(void)
@@ -51,6 +63,6 @@ void main(void)
 	vec3 lP = vec3(wlP / wlP.w) * 0.5 + 0.5;
 
 	float shadowDepth = textureProj(Shadow, vec4(lP.xy, lP.z -0.005, 1.0), 0.0);
-	Color = shadowDepth * vec4(directionalLight(n, v, diffuseColor, specularColor, specularPower), 1.0);
+	Color = vec4(diffuseColor * 0.2, 1.f) + shadowDepth * vec4(directionalLight(n, v, diffuseColor, specularColor, specularPower), 1.0);
         //Color = vec4( vec3(shadowDepth), 1.0);
 }

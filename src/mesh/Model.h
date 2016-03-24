@@ -34,7 +34,7 @@ public:
     Model(GLchar* path);
 
     // Draws the model, and thus all its meshes
-    void Draw(Shader shader);
+    void Draw(Shader *shader);
     std::vector<Texture> textures_loaded;
     std::vector<Mesh> getMeshes() { return(meshes); }
 private:

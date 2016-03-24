@@ -10,7 +10,7 @@ using namespace std;
 
 Player::Player(int forwardKey, int backwardKey, int rightKey, int leftKey) :
         forwardKey(forwardKey), backwardKey(backwardKey), rightKey(rightKey), leftKey(leftKey),
-        moveForward(false), moveRight(false), moveLeft(false), moveBackward(false),
+		moveForward(false), moveRight(false), moveLeft(false), moveBackward(false), moveUp(false), moveDown(false), canMove(false),
         speed(2.0f), position( glm::vec3( 0.0f, 0.0f, 0.0f )),
         lastX(0.0f), lastY(0.0f), firstTime(true), life(100), gold(0)
         , atkPerSec( 0.5f ), atk( 2 ), lastAttack( 0.0f ), key(1)
@@ -24,11 +24,17 @@ Player::Player(int forwardKey, int backwardKey, int rightKey, int leftKey) :
     c->addKeyListener( pair<int, int>(backwardKey, GLFW_PRESS), bind(&Player::startMoveBackward, this));
     c->addKeyListener( pair<int, int>(rightKey, GLFW_PRESS), bind(&Player::startMoveRight, this));
     c->addKeyListener( pair<int, int>(leftKey, GLFW_PRESS), bind(&Player::startMoveLeft, this));
+	c->addKeyListener(pair<int, int>(GLFW_KEY_UP, GLFW_PRESS), bind(&Player::startMoveUp, this));
+	c->addKeyListener(pair<int, int>(GLFW_KEY_DOWN, GLFW_PRESS), bind(&Player::startMoveDown, this));
+	c->addKeyListener(pair<int, int>(GLFW_KEY_LEFT_ALT, GLFW_PRESS), bind(&Player::canMoveTrue, this));
 
     c->addKeyListener( pair<int, int>(forwardKey, GLFW_RELEASE), bind(&Player::stopMoveForward, this));
     c->addKeyListener( pair<int, int>(backwardKey, GLFW_RELEASE), bind(&Player::stopMoveBackward, this));
     c->addKeyListener( pair<int, int>(rightKey, GLFW_RELEASE), bind(&Player::stopMoveRight, this));
     c->addKeyListener( pair<int, int>(leftKey, GLFW_RELEASE), bind(&Player::stopMoveLeft, this));
+	c->addKeyListener(pair<int, int>(GLFW_KEY_UP, GLFW_RELEASE), bind(&Player::stopMoveUp, this));
+	c->addKeyListener(pair<int, int>(GLFW_KEY_DOWN, GLFW_RELEASE), bind(&Player::stopMoveDown, this));
+	c->addKeyListener(pair<int, int>(GLFW_KEY_LEFT_ALT, GLFW_RELEASE), bind(&Player::canMoveFalse, this));
 
     std::function<void(double, double)> f = bind(&Player::mouseMotion, this, std::placeholders::_1, std::placeholders::_2);
     c->addCursorListener( f );
@@ -85,6 +91,16 @@ bool Player::isAttacking( float deltaTime )
 
 
 //Pretty self explaining
+//Pretty self explaining
+void Player::canMoveTrue()
+{
+	canMove = true;
+}
+//Pretty self explaining
+void Player::canMoveFalse()
+{
+	canMove = false;
+}
 void Player::startMoveUp()
 {
     moveUp = true;
@@ -137,44 +153,98 @@ void Player::startMoveLeft()
 //Apply movement based on the boolean seen ^^^^^ before ^^^^^
 void Player::move(float deltaTime)
 {
+
+#if 0 
     glm::vec3 pos = position;
     float x = pos.x;
-    float y = pos.y;
-    float z = pos.z;
+    float z = pos.y;
+    float y = pos.z;
 
-    glm::vec3 t = cam->getFront();
-    t.y = 0.0;
-    t = glm::normalize(t);
-    glm::vec3 v = glm::vec3( t.z, t.y, -t.x); 
-    glm::vec3 u = glm::cross(t,v);
+	float r = sqrt(x*x + y*y + z*z);
+	float theta = acos(z / r);
+	float phi;
+	if (x > 0.0001)
+		phi = atan(y / x);
+	else
+		phi = 0.f;
+
+	
+	glm::vec3 dir = glm::normalize(pos);
     if(moveForward)
     {
-        pos += speed*deltaTime*t;
+        r -= speed*deltaTime;
     }
     if(moveBackward)
     {
-        pos -= speed*deltaTime*t;
+        r += speed*deltaTime;
     }
     if(moveRight)
     {
-        pos += speed*deltaTime*v;
+        phi += speed*deltaTime;
     }
     if(moveLeft)
     {
-        pos -= speed*deltaTime*v;
+        phi -= speed*deltaTime;
     }
     if(moveUp)
     {
-        pos += speed*deltaTime*u;
+        theta += speed*deltaTime;
     }
     if(moveDown)
     {
-        pos -= speed*deltaTime*u;
+        theta -= speed*deltaTime;
     }
     
-    position = pos;
+	if (moveDown || moveUp || moveForward || moveBackward || moveRight || moveLeft)
+	{
+		x = r * cos(theta) * sin(phi);
+		y = r * sin(theta) * sin(phi);
+		z = r * cos(theta);
+	}
+
+    position = glm::vec3(x,z,y);
     computeAABB();
     updateCamera();
+#endif
+
+	glm::vec3 pos = position;
+	float x = pos.x;
+	float y = pos.y;
+	float z = pos.z;
+
+	glm::vec3 t = cam->getFront();
+	t.y = 0.0;
+	t = glm::normalize(t);
+	glm::vec3 v = glm::vec3(t.z, t.y, -t.x);
+	glm::vec3 u = glm::cross(t, v);
+	if (moveForward)
+	{
+		pos += speed*deltaTime*t;
+	}
+	if (moveBackward)
+	{
+		pos -= speed*deltaTime*t;
+	}
+	if (moveRight)
+	{
+		pos += speed*deltaTime*v;
+	}
+	if (moveLeft)
+	{
+		pos -= speed*deltaTime*v;
+	}
+	if (moveUp)
+	{
+		pos += speed*deltaTime*u;
+	}
+	if (moveDown)
+	{
+		pos -= speed*deltaTime*u;
+	}
+
+	position = pos;
+	computeAABB();
+	updateCamera();
 }
 
 //Update the camera along the player position
@@ -186,25 +256,28 @@ void Player::updateCamera()
 //Callback for the mouse
 void Player::mouseMotion(int x, int y)
 {
-    if ( firstTime )
-    {
-        lastX = x;
-        lastY = y;
-        firstTime = false;
-    }
-    
-    int xoff = x - lastX;
-    int yoff = y - lastY;
-    lastX = x;
-    lastY = y;
-    
-    float sensitivity = 0.5f;
-    xoff *= sensitivity;
-    yoff *= -sensitivity;
+	if (canMove)
+	{
+		if (firstTime)
+		{
+			lastX = x;
+			lastY = y;
+			firstTime = false;
+		}
 
-    cam->addYaw( xoff );
-    cam->addPitch( yoff );
-    cam->updateCameraVectors();        
+		int xoff = x - lastX;
+		int yoff = y - lastY;
+		lastX = x;
+		lastY = y;
+
+		float sensitivity = 0.5f;
+		xoff *= sensitivity;
+		yoff *= -sensitivity;
+
+		cam->addYaw(xoff);
+		cam->addPitch(yoff);
+		cam->updateCameraVectors();
+	}
 }
 
 //Compute AABB for the player (the player having no model we cant auto compute it
