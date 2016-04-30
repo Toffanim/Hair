@@ -12,8 +12,7 @@ Player::Player(int forwardKey, int backwardKey, int rightKey, int leftKey) :
         forwardKey(forwardKey), backwardKey(backwardKey), rightKey(rightKey), leftKey(leftKey),
 		moveForward(false), moveRight(false), moveLeft(false), moveBackward(false), moveUp(false), moveDown(false), canMove(false),
         speed(2.0f), position( glm::vec3( 0.0f, 0.0f, 0.0f )),
-        lastX(0.0f), lastY(0.0f), firstTime(true), life(100), gold(0)
-        , atkPerSec( 0.5f ), atk( 2 ), lastAttack( 0.0f ), key(1)
+        lastX(0.0f), lastY(0.0f), firstTime(true)
 {
     
     c = new Controller();
@@ -57,11 +56,6 @@ Player::Player(int forwardKey, int backwardKey, int rightKey, int leftKey) :
     #endif
     
     cam = new Camera( position );
-
-    aabb.min = glm::vec3();
-    aabb.max = glm::vec3();
-    aabb.size = glm::vec3();
-    aabb.center = glm::vec3();
 }
 
 Player::~Player()
@@ -70,23 +64,6 @@ Player::~Player()
     { delete c; }
     if(cam)
     { delete cam; }
-}
-
-//Is the player currently having a key ?
-bool Player::hasKey()
-{
-    return key > 0 ? true : false;
-}
-
-//Is the player attacking ?
-bool Player::isAttacking( float deltaTime )
-{
-    lastAttack += deltaTime;
-    if ( lastAttack >= atkPerSec)
-    {
-        lastAttack = 0.0f;
-        return true;
-    }return false;
 }
 
 
@@ -153,60 +130,6 @@ void Player::startMoveLeft()
 //Apply movement based on the boolean seen ^^^^^ before ^^^^^
 void Player::move(float deltaTime)
 {
-
-#if 0 
-    glm::vec3 pos = position;
-    float x = pos.x;
-    float z = pos.y;
-    float y = pos.z;
-
-	float r = sqrt(x*x + y*y + z*z);
-	float theta = acos(z / r);
-	float phi;
-	if (x > 0.0001)
-		phi = atan(y / x);
-	else
-		phi = 0.f;
-
-	
-	glm::vec3 dir = glm::normalize(pos);
-    if(moveForward)
-    {
-        r -= speed*deltaTime;
-    }
-    if(moveBackward)
-    {
-        r += speed*deltaTime;
-    }
-    if(moveRight)
-    {
-        phi += speed*deltaTime;
-    }
-    if(moveLeft)
-    {
-        phi -= speed*deltaTime;
-    }
-    if(moveUp)
-    {
-        theta += speed*deltaTime;
-    }
-    if(moveDown)
-    {
-        theta -= speed*deltaTime;
-    }
-    
-	if (moveDown || moveUp || moveForward || moveBackward || moveRight || moveLeft)
-	{
-		x = r * cos(theta) * sin(phi);
-		y = r * sin(theta) * sin(phi);
-		z = r * cos(theta);
-	}
-
-    position = glm::vec3(x,z,y);
-    computeAABB();
-    updateCamera();
-#endif
-
 	glm::vec3 pos = position;
 	float x = pos.x;
 	float y = pos.y;
@@ -243,7 +166,6 @@ void Player::move(float deltaTime)
 	}
 
 	position = pos;
-	computeAABB();
 	updateCamera();
 }
 
@@ -278,19 +200,4 @@ void Player::mouseMotion(int x, int y)
 		cam->addPitch(yoff);
 		cam->updateCameraVectors();
 	}
-}
-
-//Compute AABB for the player (the player having no model we cant auto compute it
-void Player::computeAABB()
-{
-    float halfSize = 0.2f;
-    aabb.max.x = position.x + halfSize;
-    aabb.max.y = position.y + halfSize;
-    aabb.max.z = position.z + halfSize;
-    aabb.min.x = position.x - halfSize;
-    aabb.min.y = position.y - 0.4f;
-    aabb.min.z = position.z - halfSize;
-
-    aabb.size = glm::vec3(halfSize*2);
-    aabb.center = position;
 }

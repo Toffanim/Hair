@@ -9,9 +9,9 @@
 //Camera class, pretty straightforward
 Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw , GLfloat pitch ) : position(position), up(up), yaw(yaw), pitch(pitch)
 {
-    front = glm::vec3(0.0f, 0.0f, -1.0f);
-    zoom = 45.0f;
-    updateCameraVectors();
+	updateCameraVectors();
+    front = glm::vec3(1.0f, 0.0f, 0.0f);
+    zoom = 45.0f;    
 }
 
 glm::mat4 Camera::getViewMatrix()

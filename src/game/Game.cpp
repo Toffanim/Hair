@@ -115,6 +115,7 @@ void Game::close()
     endgame = true;
 }
 
+//Particle structure with a velocity, position, etc
 struct Particle
 {
     glm::vec3 position;
@@ -145,6 +146,8 @@ struct Particle
  
 };
 
+// Hair structure, basically a set of particules bounded as lines that you can render
+// and update
 struct Hair
 {
     Hair( int num, float d, glm::vec3 root, glm::vec3 d_x, glm::vec3 d_y)
@@ -155,6 +158,7 @@ struct Hair
         setup(num, d, root);		
     }
     
+	//Create opengl buffers for particules and set particules
     void setup( int num, float d, glm::vec3 root )
     {        
         length = d;
@@ -197,6 +201,7 @@ struct Hair
         currentTime = glfwGetTime();
     }
 
+	// Add force to the particles
     void addForce(glm::vec3 f)
     {
         for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it) {
@@ -207,6 +212,7 @@ struct Hair
         }
     }
 
+	// Update the particles according to a time derivative
     void update()
     {
         float dt = (glfwGetTime() - currentTime);  // Time step
@@ -235,7 +241,6 @@ struct Hair
             p->velocity = p->velocity + dt * (p->forces * p->inv_mass);
             p->tmp_position += (p->velocity * dt);
             p->forces = glm::vec3(0.0, -2.0, 0.0); //Add initial force = gravity
-            //p->velocity *= 0.99;
 			i++;
         }    
         // solve constraints
@@ -292,6 +297,7 @@ struct Hair
         }
     }
 
+	//Draw hair as GL_PATCHES for tesselation
     void draw( Shader* s)
     {
 		glUniform3fv(glGetUniformLocation(s->getProgram(), "d_x"), 1, &dx[0]);
@@ -315,6 +321,8 @@ struct Hair
 	glm::vec3 dx;
 };
 
+//Code not use to render multistrand instead of only single strands
+#if 0
 static void renderMultiStrands(Hair h1, Hair h2, Hair h3)
 {
 	int size = 3 * h1.particles.size();
@@ -350,6 +358,7 @@ static void renderMultiStrands(Hair h1, Hair h2, Hair h3)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
+#endif
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -371,7 +380,7 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 
 void Game::scene1( Player* p, Skybox* skybox, Times times )
 {
-    //Make hair
+    //Create Hair if it has not been already made
     static std::vector<Hair> vh;
     if ( vh.empty() )
     {
@@ -400,7 +409,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
 		}
 		glLineWidth(0.2f);
     }
-    //Get needed assets
+    //Get needed assets managers
     ShaderManager& shaderManager = Manager<ShaderManager>::instance();
 	ModelManager& modelManager = Manager<ModelManager>::instance();
     TextureManager& textureManager = Manager<TextureManager>::instance();
@@ -436,11 +445,6 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     //Render in GBUFFER
     glBindFramebuffer(GL_FRAMEBUFFER, fboManager["gbuffer"]);
     shaderManager["gbuffer"]->use();
-    // Select textures
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textureManager["brick_diff"]);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, textureManager["brick_spec"]);	
     // Upload uniforms
     glUniformMatrix4fv(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
     glUniformMatrix4fv(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "MV"), 1, GL_FALSE, glm::value_ptr(mv));
@@ -449,6 +453,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     glUniform1f(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "Time"), t);
     glUniform1i(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "Diffuse"), 0);
     glUniform1i(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "Specular"), 1);
+	// Draw sphere
 	modelManager["sphere"]->Draw(shaderManager["gbuffer"]);
 	objectToWorld = glm::translate(glm::mat4(), glm::vec3(0.f, -2.f, 0.f));
 	mv = worldToView * objectToWorld;
@@ -459,7 +464,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
 	glUniformMatrix4fv(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
 	glUniformMatrix4fv(glGetUniformLocation(shaderManager["gbuffer"]->getProgram(), "MV"), 1, GL_FALSE, glm::value_ptr(mv));
 	glDrawElements(GL_TRIANGLES, 2 * 3, GL_UNSIGNED_INT, (void*)0);
-    //Render scene
+    //Draw hairs
     shaderManager["hair"]->use();
 	objectToWorld = glm::mat4();
 	mv = worldToView * objectToWorld;
@@ -471,6 +476,8 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     glUniform1f(glGetUniformLocation(shaderManager["hair"]->getProgram(), "Time"), t);
     glUniform1i(glGetUniformLocation(shaderManager["hair"]->getProgram(), "Diffuse"), 0);
     glUniform1i(glGetUniformLocation(shaderManager["hair"]->getProgram(), "Specular"), 1);
+	//Multi strand not use yet
+#if 0
 	shaderManager["hairMulti"]->use();
 	glUniformMatrix4fv(glGetUniformLocation(shaderManager["hairMulti"]->getProgram(), "MVP"), 1, GL_FALSE, glm::value_ptr(mvp));
 	glUniformMatrix4fv(glGetUniformLocation(shaderManager["hairMulti"]->getProgram(), "MV"), 1, GL_FALSE, glm::value_ptr(mv));
@@ -479,6 +486,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
 	glUniform1f(glGetUniformLocation(shaderManager["hairMulti"]->getProgram(), "Time"), t);
 	glUniform1i(glGetUniformLocation(shaderManager["hairMulti"]->getProgram(), "Diffuse"), 0);
 	glUniform1i(glGetUniformLocation(shaderManager["hairMulti"]->getProgram(), "Specular"), 1);
+#endif
     Utils::checkGlError("gbuffer0");
 	shaderManager["hair"]->use();
 	for (int i = 0; i < vh.size(); i++)
@@ -486,6 +494,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
 		if (enableWind && WindForce != 0 && glm::vec3(WindX, WindZ, WindY) != glm::vec3(0))
 		    vh[i].addForce( (float)WindForce / 100.f * glm::normalize(glm::vec3(WindX, WindZ, WindY)));
 		vh[i].update();
+		//Multi strand not use yet
 #if 0
 		if ((i + 1) % 3 == 0)
 		{
@@ -501,7 +510,8 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     glBindVertexArray(0);
     Utils::checkGlError("gbuffer");
     
-
+	//Create lights and render shadow maps
+	//Only one directional light for now
     struct DirectionalLight
     {
         glm::vec3 direction;
@@ -513,7 +523,6 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
 
 #if 1
     const int uboSize = 512;
-    const int SPOT_LIGHT_COUNT = 1;
     // Map the spot light data UBO
     glBindBuffer(GL_UNIFORM_BUFFER, fboManager["ubo"]);
     char * directionalLightBuffer = (char *)glMapBufferRange(GL_UNIFORM_BUFFER, 0, uboSize, GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
@@ -532,9 +541,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
         glm::mat4 objectToWorld;
         glm::mat4 objectToLight = worldToLight * objectToWorld;
         glm::mat4 objectToLightScreen = lightProjection * objectToLight;
-
         // Attach shadow texture for current light
-
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureManager["shadow"+to_string(i)], 0);
         // Clear only the depth buffer
         glClear(GL_DEPTH_BUFFER_BIT);
@@ -547,6 +554,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
         //Render scene
 		for (int i = 0; i < vh.size(); i++)
 		{
+			//Multi strand not use yet
 #if 0
 			if ((i + 1) % 3 == 0)
 			{
@@ -652,6 +660,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     shaderManager["blitHDR"]->unuse();
     Utils::checkGlError("blit"); 
 
+	//Debug output
 #if 1     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     shaderManager["blit"]->use();
@@ -685,7 +694,7 @@ void Game::scene1( Player* p, Skybox* skybox, Times times )
     // Draw quad
     glDrawElements(GL_TRIANGLES, 2 * 3, GL_UNSIGNED_INT, (void*)0);
     shaderManager["blit"]->unuse();
-    #endif
+#endif
 }
 
 void Game::loadShaders()
@@ -701,10 +710,10 @@ void Game::loadShaders()
     blitHDRShader->attach(blitVertShader);
     blitHDRShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/blitHDR.frag");
     blitHDRShader->link();
-    Shader* blitDepth = new Shader("Depth blit");
-    blitDepth->attach(blitVertShader);
-    blitDepth->attach(GL_FRAGMENT_SHADER, "assets/shaders/blitDepth.frag");
-    blitDepth->link();
+	Shader* blitDepth = new Shader("Depth blit");
+	blitDepth->attach(blitVertShader);
+	blitDepth->attach(GL_FRAGMENT_SHADER, "assets/shaders/blitDepth.frag");
+	blitDepth->link();
     //RENDERING SHADERS
     Shader* gbuffer = new Shader("G-buffer");
     gbuffer->attach(GL_VERTEX_SHADER, "assets/shaders/gbuffer.vert");
@@ -716,79 +725,36 @@ void Game::loadShaders()
     hair->attach(GL_TESS_EVALUATION_SHADER, "assets/shaders/hair.tes");
     hair->attach(GL_FRAGMENT_SHADER, "assets/shaders/hair.frag");
     hair->link();
-	Shader* hairMulti = new Shader("Hair");
+#ifdef MULTI_STRANDS
+	Shader* hairMulti = new Shader("Hair multi");
 	hairMulti->attach(GL_VERTEX_SHADER, "assets/shaders/hair.vert");
 	hairMulti->attach(GL_TESS_CONTROL_SHADER, "assets/shaders/hairMulti.tcs");
 	hairMulti->attach(GL_TESS_EVALUATION_SHADER, "assets/shaders/hairMulti.tes");
 	hairMulti->attach(GL_FRAGMENT_SHADER, "assets/shaders/hair.frag");
 	hairMulti->link();
-    
+#endif  
     Shader* shadowShader = new Shader( "Shadows" );
     shadowShader->attach( (*gbuffer)[0] );
     shadowShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/shadow.frag");
     shadowShader->link();
-    Shader* plShader = new Shader("Point light");
-    plShader->attach(blitVertShader);
-    plShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/pointlight.frag");
-    plShader->link();
-    Shader* slShader = new Shader("Spot light");
-    slShader->attach(blitVertShader);
-    slShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/spotlight.frag");
-    slShader->link();
     Shader* dlShader = new Shader("Directional light");
     dlShader->attach(blitVertShader);
     dlShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/directionallight.frag");
     dlShader->link();
-    Shader* plShadowShader = new Shader("piint light shadow");
-    plShadowShader->attach(GL_VERTEX_SHADER, "assets/shaders/cubemap.vert");
-    plShadowShader->attach(GL_GEOMETRY_SHADER, "assets/shaders/cubemap.geom");
-    plShadowShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/cubemap.frag");
-    plShadowShader->link();
-    //POSTFX SHADERS
-    Shader* blurShader = new Shader("Blur shader");
-    blurShader->attach(GL_VERTEX_SHADER, "assets/shaders/blur.vert");
-    blurShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/blur.frag");
-    blurShader->link();
-    Shader* brightShader = new Shader("Bright shader");
-    brightShader->attach(blitVertShader);
-    brightShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/extractBright.frag");
-    brightShader->link();
-    Shader* bloomShader = new Shader("Bloom shader");
-    bloomShader->attach(blitVertShader);
-    bloomShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/bloom.frag");
-    bloomShader->link();
-    Shader* lightShaftShader = new Shader("Light shaft");
-    lightShaftShader->attach(blitVertShader);
-    lightShaftShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/lightShaft.frag");
-    lightShaftShader->link();
-    Shader* sunShader = new Shader("Sun shader");
-    sunShader->attach(blitVertShader);
-    sunShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/sun.frag");
-    sunShader->link();
-    Shader* ssrShader = new Shader("SSR shader");
-    ssrShader->attach(blitVertShader);
-    ssrShader->attach(GL_FRAGMENT_SHADER, "assets/shaders/SSRR.frag");
-    ssrShader->link();
+
     
     shaderManager.getManaged().insert( pair<string, Shader*>( "dirLight", dlShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "ssr", ssrShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "sun", sunShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "lightShaft", lightShaftShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "plShadow", plShadowShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "depth", blitDepth));
     shaderManager.getManaged().insert( pair<string, Shader*>( "shadow", shadowShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "pointLight", plShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "spotLight", slShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "blur", blurShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "bloom", bloomShader));
-    shaderManager.getManaged().insert( pair<string, Shader*>( "bright", brightShader));
     shaderManager.getManaged().insert( pair<string, Shader*>( "gbuffer", gbuffer));
     shaderManager.getManaged().insert( pair<string, Shader*>( "blit", blitShader));
     shaderManager.getManaged().insert( pair<string, Shader*>( "blitHDR", blitHDRShader));
     shaderManager.getManaged().insert( pair<string, Shader*>( "hair", hair));
+	shaderManager.getManaged().insert(pair<string, Shader*>("depth", blitDepth));
+#ifdef MULTI_STRANDS
 	shaderManager.getManaged().insert(pair<string, Shader*>("hairMulti", hairMulti));
+#endif
 
-    bloomShader->unuse();
+    hair->unuse();
 }
 
 
@@ -1062,8 +1028,7 @@ void Game::loadAssets()
 {
 
     std::cout << std::endl << "---- LOAD ASSETS AND CREATE FBOs ---" << std::endl << std::endl;
-    //Manager<Model*>& modelManager = Manager<Model*>::getInstance();
-    TextureManager& textureManager = Manager<TextureManager>::instance();    
+    //Manager<Model*>& modelManager = Manager<Model*>::getInstance();  
     FboManager& fboManager = Manager<FboManager>::instance();
 	ModelManager& modelManager = Manager<ModelManager>::instance();
 
@@ -1072,40 +1037,6 @@ void Game::loadAssets()
     initGbuffer();
     initFX();
     initShadows();
-
-    // Load images and upload textures
-    GLuint textures[2];
-    glGenTextures(2, textures);
-    int x;
-    int y;
-    int comp;
-
-    unsigned char * diffuse = stbi_load("assets/textures/spnza_bricks_a_diff.tga", &x, &y, &comp, 3);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB8, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, diffuse);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    fprintf(stderr, "Diffuse %dx%d:%d\n", x, y, comp);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    unsigned char * spec = stbi_load("assets/textures/spnza_bricks_a_spec.tga", &x, &y, &comp, 1);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, textures[1]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, x, y, 0, GL_RED, GL_UNSIGNED_BYTE, spec);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    fprintf(stderr, "Spec %dx%d:%d\n", x, y, comp);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    textureManager.getManaged().insert( pair<string, Tex>( "brick_diff", {textures[0]}));
-    textureManager.getManaged().insert( pair<string, Tex>( "brick_spec", {textures[1]}));
 
     //create UBO
     // Update and bind uniform buffer object
@@ -1129,7 +1060,7 @@ int Game::mainLoop()
       Create all the vars that we may need for rendering such as shader, VBO, FBO, etc
       .     */
     Player* p = new Player();
-    p->setPosition(glm::vec3(-1.f, 0.f, 0.f));
+    p->setPosition(glm::vec3(-6.f, 0.f, 0.f));
     
     glfwSetKeyCallback( window, key_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
@@ -1148,9 +1079,6 @@ int Game::mainLoop()
     Utils::checkGlError("skybox error");
 
 #if 1
-
-
-
 
     Times t;
     while(glfwGetKey( window, GLFW_KEY_ESCAPE ) != GLFW_PRESS )

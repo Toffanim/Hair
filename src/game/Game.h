@@ -13,37 +13,21 @@
 #include <utility>
 #include <stdlib.h>
 #include <iostream>
-#include "glew/glew.h"
-#include "../player/Player.h"
-//#include "../controller/Controller.h"
-#include "../mesh/Model.h"
-#include "../camera/Camera.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
 #include <cfloat>
 #include <cstdint>
 #include <cstdlib>
+#include "glew/glew.h"
+#include "../player/Player.h"
+#include "../mesh/Model.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "../managers/Manager.h"
-#include "../managers/ControllerManager.h"
 #include "GLFW/glfw3.h"
 #include "stb/stb_image.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
 #include "../skybox/Skybox.h"
-#include "../postFX/PostFX.h"
-
-struct room
-{
-    bool murSud;
-    bool murEst;
-    bool murOuest;
-    bool murNord;
-    bool ceil;
-    bool floor;
-    int offsetX;
-    int offsetY;
-};
 
 struct Times
 {
