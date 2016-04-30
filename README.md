@@ -1,5 +1,6 @@
 # Hair
 Nvidia HairWorks OpenGL implementation
+Vidéo de démo disponbile : https://www.youtube.com/watch?v=eZkCDZM0VD0
 
 
 # Compilation
